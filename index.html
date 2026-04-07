@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="card">
+    <h1>Login</h1>
+
+    <form id="loginForm">
+
+      <div class="field-group">
+        <label for="username">Usuário:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Digite o seu utilizador"
+          autocomplete="username"
+        />
+      </div>
+
+      <div class="field-group">
+        <label for="password">Senha:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Digite a sua senha"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button type="submit">Entrar</button>
+
+      <!-- Área de mensagens (erro ou sucesso) -->
+      <p id="result"></p>
+
+    </form>
+  </div>
+
+  <script>
+    const form   = document.getElementById('loginForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      // Impede o recarregamento padrão da página
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Limpa mensagem anterior
+      result.textContent = '';
+      result.className   = '';
+
+      try {
+        const response = await fetch('http://localhost:3000/login', {
+          method : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body   : JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // HTTP 200 → sucesso
+          result.textContent = data.message;
+          result.className   = 'success';
+        } else {
+          
+          result.textContent = data.message;
+          result.className   = 'error';
+        }
+
+      } catch (err) {
+        
+        result.textContent = 'Erro de ligação ao servidor. Verifique se o servidor está ativo.';
+        result.className   = 'error';
+      }
+    });
+  </script>
+
+</body>
+</html>
