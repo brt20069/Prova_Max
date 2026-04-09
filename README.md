@@ -1,4 +1,8 @@
+
 # 🔐 Sistema de Autenticação de Acesso Básico
+
+Aluno: Pedro Henrique Barreto De Lima
+RA: 5167806
 
 Aplicação web fullstack com autenticação de utilizadores, desenvolvida com **Node.js + Express** no back-end e **HTML/CSS/JavaScript** no front-end.
 
